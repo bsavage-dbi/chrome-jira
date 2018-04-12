@@ -1,16 +1,12 @@
-const defaultOptions = {
-  blacklist: 'example.com, another-example.com',
-  jira_path: 'https://example.com/browse/',
-  regex: '[A-Z]{2,10}-[\\d]{1,6}',
-};
-
+let options;
 if (localStorage.options && localStorage.options.length > 0) {
-  var options = JSON.parse(localStorage.options);
+  options = JSON.parse(localStorage.options);
 } else {
-  var options = defaultOptions;
+  options = { // Defaults
+    jira_path: 'https://jira2.cerner.com/browse/',
+    regex: '[A-Z]{2,10}-[\\d]{1,6}',
+  };
 }
-
-options.blacklist = parseBlacklist(options.blacklist);
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message == 'get_options') {
@@ -34,21 +30,6 @@ function fetchJiraStatus() {
 }
 
 window.fetchJira = fetchJiraStatus;
-
-function parseBlacklist(blacklist) {
-  if (blacklist instanceof Array) { return blacklist; }
-
-  blacklist = blacklist.replace(/\n/g, ',');
-  blacklist = blacklist.replace(/,+/g, ',');
-  blacklist = blacklist.replace(/^,|,$/g, '');
-  blacklist = blacklist.split(',');
-
-  for (let i = blacklist.length; i--;) { blacklist[i] = blacklist[i].trim(); }
-
-  if (blacklist.length == 1 && !blacklist[0]) { blacklist = []; }
-
-  return blacklist;
-}
 
 function installNotice() {
   if (localStorage.getItem('install_time')) { return; }

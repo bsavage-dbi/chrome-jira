@@ -25,21 +25,16 @@ textarea {
 <body>
 	<div id="install" style="display:none;" >
 		<h1>First Time Installation</h1>
-		Before this extension can be used, you must change the JIRA path option below.<br /><br />
-		Some websites may not behave as expected with this extension, and a blacklist <br />
-		is provided which will allow you to conditionally disable this extension on a <br />
-		per-domain basis, if needed.<br /><br /><br />
+		<p>Before this extension can be used, you must change the JIRA path option below.</p>
 	</div>
-	
+
 	<h1>Linkify JIRA Issues: Options</h1>
 
 	<form id="options_form">
 		<label for="jira_path"> JIRA Browse Path: </label>
 		<input type="text" size="70" id="jira_path" /><br /><br />
-		<label for="blacklist"> Disable extension for the following domains (separate by commas): </label>
-		<textarea id="blacklist"></textarea><br /><br /><br />
 		<strong><em>Advanced Settings</em></strong>
-		<label for="regex"> Regular Expression to Match Against: </label>
+		<label for="regex">Regular Expression to Match:</label>
 		<input type="text" size="40" id="regex" /><br /><small>default: [A-Z]{2,10}-[\d]{1,6} </small>
 	</form>
 

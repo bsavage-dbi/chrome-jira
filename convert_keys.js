@@ -100,11 +100,6 @@ let options = {};
 chrome.runtime.sendMessage('get_options', (options_) => {
   options = options_;
 
-  // Stop now if domain is on the blacklist
-  for (let i = options.blacklist.length; i--;) {
-    if (document.domain.indexOf(options.blacklist[i]) != -1) { return; }
-  }
-
   // Set global regex value
   regex = options.regex;
 

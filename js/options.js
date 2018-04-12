@@ -9,7 +9,6 @@ function init() {
   document.getElementById('jira_path').value = options.jira_path;
 
   document.getElementById('regex').value = options.regex;
-  document.getElementById('blacklist').value = options.blacklist;
 
   document.getElementById('options_form').onchange = save;
 
@@ -18,9 +17,6 @@ function init() {
 
   document.getElementById('regex').onkeyup = save;
   document.getElementById('regex').onclick = save;
-
-  document.getElementById('blacklist').onkeyup = save;
-  document.getElementById('blacklist').onclick = save;
 
   allLoaded = true;
 
@@ -46,11 +42,9 @@ function save() {
 
   options.jira_path = document.getElementById('jira_path').value;
   options.regex = document.getElementById('regex').value;
-  options.blacklist = bg.parseBlacklist(document.getElementById('blacklist').value);
 
   // Reset to defaults if settings are wiped
   if (options.jira_path && options.jira_path.length == 0) { options.jira_path = 'https://example.com/browse/'; }
-  if (options.backlist && options.backlist.length == 0) { options.blacklist = 'example.com, another-example.com'; }
   if (options.regex && options.regex.length == 0) { options.regex = '[A-Z]{2,10}-[\\d]{1,6}'; }
 
   localStorage.options = JSON.stringify(options);

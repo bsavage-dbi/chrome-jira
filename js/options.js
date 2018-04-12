@@ -1,5 +1,5 @@
-
 const bg = chrome.extension.getBackgroundPage();
+
 let options = {};
 let allLoaded = false;
 window.addEventListener('load', init, false);

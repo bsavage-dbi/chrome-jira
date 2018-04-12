@@ -1,5 +1,5 @@
 let options;
-if (localStorage.options && localStorage.options.length > 0) {
+if (localStorage.options && localStorage.options.length) {
   options = JSON.parse(localStorage.options);
 } else {
   options = { // Defaults
@@ -14,22 +14,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
 });
-
-function fetchJiraStatus(key) {
-  console.log(`Fetching JIRA data for ${key}`);
-  const xhr = new XMLHttpRequest();
-  xhr.open('GET', `https://jira2.cerner.com/rest/api/2/issue/${key}?fields=status`, true);
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4) {
-      const resp = JSON.parse(xhr.responseText);
-      const status = resp.fields.status.name;
-      console.log(status);
-    }
-  };
-  xhr.send();
-}
-
-window.fetchJira = fetchJiraStatus;
 
 function installNotice() {
   if (localStorage.getItem('install_time')) return;

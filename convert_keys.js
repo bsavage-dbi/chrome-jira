@@ -3,26 +3,26 @@ let regex;
 
 function searchForKeyNames() {
   function createLinkFromNode(node) {
-    let m;
     const txt = node.textContent;
-    let span = null;
-    let p = 0;
+    let mVar;
+    let span;
+    let pVar = 0;
 
     if (txt.trim().length === 0) return;
 
     const jiraTagExpression = new RegExp(`(${regex})`, 'g');
 
-    while ((m = jiraTagExpression.exec(txt)) !== null) {
-      if (span === null) {
+    while ((mVar = jiraTagExpression.exec(txt)) !== null) {
+      if (!span) {
         // Create a new span for the replaced text and newly created href
         span = document.createElement('span');
       }
 
       // Get the link without trailing dots
-      const link = m[0].replace(/\.*$/, '');
+      const link = mVar[0].replace(/\.*$/, '');
 
       // Put in text up to the link
-      span.appendChild(document.createTextNode(txt.substring(p, m.index)));
+      span.appendChild(document.createTextNode(txt.substring(pVar, mVar.index)));
 
       // Create a link and put it in the span
       const a = document.createElement('a');
@@ -33,11 +33,11 @@ function searchForKeyNames() {
 
       span.appendChild(a);
       // track insertion point
-      p = m.index + m[0].length;
+      pVar = mVar.index + mVar[0].length;
     }
     if (span) {
       // Take the text after the last link
-      span.appendChild(document.createTextNode(txt.substring(p, txt.length)));
+      span.appendChild(document.createTextNode(txt.substring(pVar, txt.length)));
 
       // Replace the original text with the new span
       try {
@@ -64,18 +64,15 @@ const observer = new MutationObserver(() => {
   searchForKeyNames();
   observer.start();
 });
-const observerConfig = {
-  attributes: false,
-  characterData: false,
-  childList: true,
-  subtree: true,
-};
 observer.start = () => {
-  observer.observe(document.body, observerConfig);
+  observer.observe(document.body, {
+    attributes: false,
+    characterData: false,
+    childList: true,
+    subtree: true,
+  });
 };
-observer.stop = () => {
-  observer.disconnect();
-};
+observer.stop = () => observer.disconnect;
 
 function findTextNodes(root) {
   root = root || document.body;

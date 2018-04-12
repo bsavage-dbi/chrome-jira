@@ -3,13 +3,12 @@ let regex;
 
 function searchForKeyNames() {
   function createLinkFromNode(node) {
-    let l,
-      m;
+    let m;
     const txt = node.textContent;
     let span = null;
     let p = 0;
 
-    if (txt.trim().length == 0) { return; }
+    if (txt.trim().length === 0) return;
 
     const jiraTagExpression = new RegExp(`(${regex})`, 'g');
 
@@ -20,13 +19,13 @@ function searchForKeyNames() {
       }
 
       // Get the link without trailing dots
-      link = m[0].replace(/\.*$/, '');
+      const link = m[0].replace(/\.*$/, '');
 
       // Put in text up to the link
       span.appendChild(document.createTextNode(txt.substring(p, m.index)));
 
       // Create a link and put it in the span
-      a = document.createElement('a');
+      const a = document.createElement('a');
       a.className = 'linkclass';
       a.appendChild(document.createTextNode(link));
       a.setAttribute('href', jiraPath + link);
@@ -50,7 +49,7 @@ function searchForKeyNames() {
     }
   }
 
-  if (document.contentType != 'text/xml' && document.contentType != 'application/xml') {
+  if (document.contentType !== 'text/xml' && document.contentType !== 'application/xml') {
     let node,
       allLinks = findTextNodes();
     for (let i = 0; i < allLinks.length; i++) {
@@ -60,24 +59,23 @@ function searchForKeyNames() {
   }
 }
 
-const observer = new MutationObserver(onMutation);
+const observer = new MutationObserver(() => {
+  observer.stop();
+  searchForKeyNames();
+  observer.start();
+});
 const observerConfig = {
   attributes: false,
   characterData: false,
   childList: true,
   subtree: true,
 };
-observer.start = function () {
+observer.start = () => {
   observer.observe(document.body, observerConfig);
 };
-observer.stop = function () {
+observer.stop = () => {
   observer.disconnect();
 };
-function onMutation() {
-  observer.stop();
-  searchForKeyNames();
-  observer.start();
-}
 
 function findTextNodes(root) {
   root = root || document.body;
@@ -86,11 +84,15 @@ function findTextNodes(root) {
 
   const ignoreTags = /^(?:a|noscript|option|script|style|textarea)$/i;
   (function findTextNodes(node) {
-	  node = node.firstChild;
-	  while (node) {
-	    if (node.nodeType == 3) { textNodes.push(node); } else if (!ignoreTags.test(node.nodeName)) { findTextNodes(node); }
-	    node = node.nextSibling;
-	  }
+    node = node.firstChild;
+    while (node) {
+      if (node.nodeType === 3) {
+        textNodes.push(node);
+      } else if (!ignoreTags.test(node.nodeName)) {
+        findTextNodes(node);
+      }
+      node = node.nextSibling;
+    }
   }(root));
   return textNodes;
 }
@@ -105,7 +107,7 @@ chrome.runtime.sendMessage('get_options', (options_) => {
 
   // Format JIRA path with a trailing slash if not present
   jiraPath = options.jira_path;
-  if (jiraPath.substr(-1) != '/') jiraPath += '/';
+  if (jiraPath.substr(-1) !== '/') jiraPath += '/';
 
   // Ready to begin search for key names
   searchForKeyNames();

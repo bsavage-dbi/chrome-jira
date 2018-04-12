@@ -4,6 +4,20 @@ let options = {};
 let allLoaded = false;
 window.addEventListener('load', init, false);
 
+function save() {
+  if (!allLoaded) return;
+
+  options.jira_path = document.getElementById('jira_path').value;
+  options.regex = document.getElementById('regex').value;
+
+  // Reset to defaults if settings are wiped
+  if (options.jira_path && options.jira_path.length === 0) { options.jira_path = 'https://example.com/browse/'; }
+  if (options.regex && options.regex.length === 0) { options.regex = '[A-Z]{2,10}-[\\d]{1,6}'; }
+
+  localStorage.options = JSON.stringify(options);
+  bg.options = options;
+}
+
 function init() {
   options = bg.options;
   document.getElementById('jira_path').value = options.jira_path;
@@ -35,18 +49,4 @@ function init() {
     }
     return null;
   };
-}
-
-function save() {
-  if (!allLoaded) return;
-
-  options.jira_path = document.getElementById('jira_path').value;
-  options.regex = document.getElementById('regex').value;
-
-  // Reset to defaults if settings are wiped
-  if (options.jira_path && options.jira_path.length === 0) { options.jira_path = 'https://example.com/browse/'; }
-  if (options.regex && options.regex.length === 0) { options.regex = '[A-Z]{2,10}-[\\d]{1,6}'; }
-
-  localStorage.options = JSON.stringify(options);
-  bg.options = options;
 }

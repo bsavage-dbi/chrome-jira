@@ -5,14 +5,13 @@
    "content_scripts": [ {
       "exclude_globs": [ "http://*.acidtests.org/*" ],
       "js": [ "convert_keys.js" ],
-      "matches": [ "http://*/*", "https://*/*" ]
+      "matches": [ "https://github.cerner.com/*", "https://jira.cerner.com/*", "https://jira2.cerner.com/*", "https://jira3.cerner.com/*"]
    } ],
-   "description": "Turns JIRA key names (such as 'CONNECT-123') to links in webpages for easy navigation.",
-   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsJozmWJw49Q9tpqw/C7aRLeRUDyIQ++27iZhBapyabJoTRkNp82TzNEkcobgN3yD4jn+oGFwHKAObrQzkFlUdLGA1eVYUva2YTN8F0dd0jgL38IYq0z4qiIMHRzTx+cFlFRwRZsGpXOBHMSokUjegxp8ftn5vg+ucOtDkR50flyKpwGiHeG1jRgP9qVFOvPtvmbxNz07UBLjc39+gadJ11+dSaiKmSNvEv47GpcbRZjM7PN4HB47JFCzawL1rSfKIBYP86TjveioySsTkVSj3/EhyI2VjxwSCIck0s6pgzEjYXD/s3TOYSABd9qM+zP2EihIpvAqpxW52R/awkJOzwIDAQAB",
+   "description": "Turns JIRA key names (such as 'CONNECT-123') info links in webpages for easy navigation.",
    "manifest_version": 2,
    "name": "Cerner Linkify Github to JIRA",
    "options_page": "options.html",
    "permissions": [ "https://github.cerner.com/*" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "1.0.2"
+   "version": "0.0.1"
 }

@@ -9,7 +9,7 @@ if (localStorage.options && localStorage.options.length > 0) {
 }
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message == 'get_options') {
+  if (message === 'get_options') {
     sendResponse(options);
     return true;
   }
@@ -19,12 +19,12 @@ function fetchJiraStatus() {
   console.log('Fetching data for JIRA');
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://jira2.cerner.com/rest/api/2/issue/CONNECT-1648?expand=names', true);
-  xhr.onreadystatechange = function () {
-	  if (xhr.readyState == 4) {
-	    const resp = JSON.parse(xhr.responseText);
-      const name = resp.fields.status.name;
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === 4) {
+      const resp = JSON.parse(xhr.responseText);
+      const { name } = resp.fields.status;
       console.log(name);
-	  }
+    }
   };
   xhr.send();
 }

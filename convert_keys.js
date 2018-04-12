@@ -1,5 +1,5 @@
-let jira_path,
-  regex;
+let jiraPath;
+let regex;
 
 function searchForKeyNames() {
   function createLinkFromNode(node) {
@@ -11,7 +11,7 @@ function searchForKeyNames() {
 
     if (txt.trim().length == 0) { return; }
 
-    jiraTagExpression = new RegExp(`(${regex})`, 'g');
+    const jiraTagExpression = new RegExp(`(${regex})`, 'g');
 
     while ((m = jiraTagExpression.exec(txt)) !== null) {
       if (span === null) {
@@ -29,7 +29,7 @@ function searchForKeyNames() {
       a = document.createElement('a');
       a.className = 'linkclass';
       a.appendChild(document.createTextNode(link));
-      a.setAttribute('href', jira_path + link);
+      a.setAttribute('href', jiraPath + link);
       a.style.textDecoration = 'underline';
 
       span.appendChild(a);
@@ -104,8 +104,8 @@ chrome.runtime.sendMessage('get_options', (options_) => {
   regex = options.regex;
 
   // Format JIRA path with a trailing slash if not present
-  jira_path = options.jira_path;
-  if (jira_path.substr(-1) != '/') jira_path += '/';
+  jiraPath = options.jira_path;
+  if (jiraPath.substr(-1) != '/') jiraPath += '/';
 
   // Ready to begin search for key names
   searchForKeyNames();

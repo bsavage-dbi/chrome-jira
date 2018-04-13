@@ -25,10 +25,9 @@ function getSavedOptions() {
   return null;
 }
 
-function replaceText(index, element, status) {
-  console.log(index);
-  console.log(element);
-  console.log(status);
+function addTooltip(index, element, status) {
+  element.setAttribute('data-tooltip', status);
+  element.setAttribute('data-tooltip-position', 'left');
 }
 
 const options = getSavedOptions() || getDefaultOptions();
@@ -49,7 +48,7 @@ for (let i = 0; i < elements.length; i += 1) {
       const matches = match.exec(text);
       if (matches) {
         fetchJiraStatus(matches[0]).then((status) => {
-          replaceText(matches.index, element, status);
+          addTooltip(matches.index, element, status);
         }).catch((err) => {
           console.error(err);
         });

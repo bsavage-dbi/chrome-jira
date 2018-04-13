@@ -2,7 +2,7 @@ const bg = chrome.extension.getBackgroundPage();
 
 function getDefaultOptions() {
   return {
-    jira_path: 'https://jira2.cerner.com/browse/',
+    jiraPath: 'https://jira2.cerner.com/browse/',
     regex: '(CONNECT)-[\\d]{1,6}',
   };
 }
@@ -17,13 +17,13 @@ function getSavedOptions() {
 
 function save() {
   const pgOptions = {
-    jira_path: document.getElementById('jira_path').value,
+    jiraPath: document.getElementById('jiraPath').value,
     regex: document.getElementById('regex').value,
   };
 
   const defaultOptions = getDefaultOptions();
-  if (!pgOptions.jira_path.length) {
-    pgOptions.jira_path = defaultOptions.jira_path;
+  if (!pgOptions.jiraPath.length) {
+    pgOptions.jiraPath = defaultOptions.jiraPath;
   }
   if (!pgOptions.regex.length) {
     pgOptions.regex = defaultOptions.regex;
@@ -35,13 +35,13 @@ function save() {
 
 function init() {
   const options = getSavedOptions() || getDefaultOptions();
-  document.getElementById('jira_path').value = options.jira_path;
+  document.getElementById('jiraPath').value = options.jiraPath;
   document.getElementById('regex').value = options.regex;
 
   document.getElementById('options_form').onchange = save;
 
-  document.getElementById('jira_path').onkeyup = save;
-  document.getElementById('jira_path').onclick = save;
+  document.getElementById('jiraPath').onkeyup = save;
+  document.getElementById('jiraPath').onclick = save;
 
   document.getElementById('regex').onkeyup = save;
   document.getElementById('regex').onclick = save;

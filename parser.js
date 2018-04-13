@@ -10,30 +10,24 @@ function fetchJiraStatus(key) {
   });
 }
 
-function getDefaultOptions() {
-  return {
-    jira_path: 'https://jira2.cerner.com/browse/',
-    regex: '(CONNECT)-[\\d]{1,6}',
-  };
-}
-
-function getSavedOptions() {
+function getOptions() {
   if (localStorage.options && localStorage.options.length) {
     return JSON.parse(localStorage.options);
   }
 
-  return null;
+  return {
+    jiraPath: 'https://jira2.cerner.com/browse/',
+    regex: '(CONNECT)-[\\d]{1,6}',
+  };
 }
 
-function addTooltip(index, element, status) {
+function addTooltip(element, status) {
   element.setAttribute('data-tooltip', status);
   element.setAttribute('data-tooltip-position', 'left');
 }
 
-const options = getSavedOptions() || getDefaultOptions();
 
-
-const match = new RegExp(options.regex, 'gi');
+const match = new RegExp(getOptions().regex, 'gi');
 const elements = document.getElementsByTagName('*');
 
 for (let i = 0; i < elements.length; i += 1) {
@@ -48,7 +42,7 @@ for (let i = 0; i < elements.length; i += 1) {
       const matches = match.exec(text);
       if (matches) {
         fetchJiraStatus(matches[0]).then((status) => {
-          addTooltip(matches.index, element, status);
+          addTooltip(element, status);
         }).catch((err) => {
           console.error(err);
         });

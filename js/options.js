@@ -6,12 +6,8 @@ function getDefaultOptions() {
   };
 }
 
-function getSavedOptions() {
-  if (localStorage.options && localStorage.options.length) {
-    return JSON.parse(localStorage.options);
-  }
-
-  return null;
+function getSavedOptions(callback) {
+  chrome.storage.sync.get(['options'], callback);
 }
 
 function save() {
@@ -32,25 +28,28 @@ function save() {
     pgOptions.tooltipPosition = defaultOptions.tooltipPosition;
   }
 
-  localStorage.options = JSON.stringify(pgOptions);
+  chrome.storage.sync.set({ options: JSON.stringify(pgOptions) });
 }
 
 function init() {
-  const options = getSavedOptions() || getDefaultOptions();
-  document.getElementById('jiraPath').value = options.jiraPath;
-  document.getElementById('regex').value = options.regex;
-  document.getElementById('tooltipPosition').value = options.tooltipPosition;
+  getSavedOptions((result) => {
+    const options = JSON.parse(result.options) || getDefaultOptions();
 
-  document.getElementById('options_form').onchange = save;
+    document.getElementById('jiraPath').value = options.jiraPath;
+    document.getElementById('regex').value = options.regex;
+    document.getElementById('tooltipPosition').value = options.tooltipPosition;
 
-  document.getElementById('jiraPath').onkeyup = save;
-  document.getElementById('jiraPath').onclick = save;
+    document.getElementById('options_form').onchange = save;
 
-  document.getElementById('regex').onkeyup = save;
-  document.getElementById('regex').onclick = save;
+    document.getElementById('jiraPath').onkeyup = save;
+    document.getElementById('jiraPath').onclick = save;
 
-  document.getElementById('tooltipPosition').onkeyup = save;
-  document.getElementById('tooltipPosition').onclick = save;
+    document.getElementById('regex').onkeyup = save;
+    document.getElementById('regex').onclick = save;
+
+    document.getElementById('tooltipPosition').onkeyup = save;
+    document.getElementById('tooltipPosition').onclick = save;
+  });
 }
 
 window.addEventListener('load', init);

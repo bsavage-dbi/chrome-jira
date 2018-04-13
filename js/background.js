@@ -1,9 +1,11 @@
 function installNotice() {
-  if (localStorage.getItem('install_time')) return;
+  chrome.storage.sync.get(['installTime'], (result) => {
+    if (result.installTime) return;
 
-  const now = new Date().getTime();
-  localStorage.setItem('install_time', now);
-  chrome.tabs.create({ url: 'options.html' });
+    const now = new Date().getTime();
+    chrome.storage.sync.set({ installTime: now });
+    chrome.tabs.create({ url: 'options.html' });
+  });
 }
 
 installNotice();

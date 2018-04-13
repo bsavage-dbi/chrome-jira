@@ -5,6 +5,7 @@
    "content_scripts": [ {
       "exclude_globs": [ "http://*.acidtests.org/*" ],
       "js": [ "convert_keys.js" ],
+      "css" : ["tooltip.css"],
       "matches": [ "https://github.cerner.com/*", "https://jira.cerner.com/*", "https://jira2.cerner.com/*", "https://jira3.cerner.com/*"]
    } ],
    "description": "Turns JIRA key names (such as 'CONNECT-123') info links in webpages for easy navigation.",

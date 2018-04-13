@@ -7,9 +7,9 @@
       "css" : ["tooltip.css"],
       "matches": [ "https://github.cerner.com/*"]
    }],
-   "description": "Turns JIRA key names (such as 'CONNECT-123') info links in webpages for easy navigation.",
+   "description": "Displays JIRA status heads up on Github.",
    "manifest_version": 2,
-   "name": "Cerner Linkify Github to JIRA",
+   "name": "Cerner Github JIRA Status",
    "options_page": "options.html",
    "permissions": [ "https://github.cerner.com/*" ],
    "update_url": "https://clients2.google.com/service/update2/crx",

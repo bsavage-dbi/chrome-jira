@@ -6,6 +6,7 @@ function getOptions() {
   return {
     jiraPath: 'https://jira2.cerner.com/',
     regex: '(CONNECT)-[\\d]{1,6}',
+    tooltipPosition: 'left',
   };
 }
 
@@ -25,7 +26,7 @@ function fetchJiraStatus(key) {
 
 function addTooltip(element, status) {
   element.setAttribute('data-tooltip', status);
-  element.setAttribute('data-tooltip-position', 'left');
+  element.setAttribute('data-tooltip-position', getOptions().tooltipPosition);
 }
 
 

@@ -6,6 +6,7 @@
     "eslint-plugin-import": "^2.10.0"
   },
   "scripts": {
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "zip": "git archive -o chrome-jira.zip HEAD"
   }
 }

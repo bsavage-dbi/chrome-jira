@@ -3,5 +3,11 @@
   "env": {
     "browser": true,
     "webextensions": true
+  },
+  "globals": {
+    "getDefaultOptions": true
+  },
+  "rules": {
+    "no-console": 0
   }
 }

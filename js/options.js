@@ -1,15 +1,3 @@
-function getDefaultOptions() {
-  return {
-    jiraPath: 'https://jira2.cerner.com/',
-    regex: '(CONNECT)-[\\d]{1,6}',
-    tooltipPosition: 'left',
-  };
-}
-
-function getSavedOptions(callback) {
-  chrome.storage.sync.get(['options'], callback);
-}
-
 function save() {
   const pgOptions = {
     jiraPath: document.getElementById('jiraPath').value,
@@ -32,8 +20,8 @@ function save() {
 }
 
 function init() {
-  getSavedOptions((result) => {
-    const options = JSON.parse(result.options) || getDefaultOptions();
+  chrome.storage.sync.get(['options'], (result) => {
+    const options = (result.options && JSON.parse(result.options)) || getDefaultOptions();
 
     document.getElementById('jiraPath').value = options.jiraPath;
     document.getElementById('regex').value = options.regex;

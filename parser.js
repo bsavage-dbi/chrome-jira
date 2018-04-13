@@ -18,7 +18,7 @@ function addTooltip(element, status, options) {
 
 
 chrome.storage.sync.get(['options'], (result) => {
-  const options = JSON.parse(result.options);
+  const options = (result.options && JSON.parse(result.options)) || getDefaultOptions();
 
   const match = new RegExp(options.regex, 'gi');
   const elements = document.getElementsByTagName('*');

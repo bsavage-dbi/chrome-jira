@@ -3,7 +3,7 @@
       "scripts": ["js/background.js"]
    },
    "content_scripts": [{
-      "js": [ "parser.js" ],
+      "js": ["js/sharedFunctions.js", "parser.js"],
       "css" : ["tooltip.css"],
       "matches": [ "https://github.cerner.com/*"]
    }],

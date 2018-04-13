@@ -4,7 +4,7 @@
    },
    "content_scripts": [{
       "js": ["js/sharedFunctions.js", "js/parser.js"],
-      "css" : ["tooltip.css"],
+      "css" : ["css/tooltip.css"],
       "matches": [ "https://github.cerner.com/*"]
    }],
    "description": "Cerner JIRA status heads up on Cerner Github.",
@@ -15,7 +15,7 @@
    },
    "manifest_version": 2,
    "name": "Cerner Github JIRA Status",
-   "options_page": "options.html",
+   "options_page": "html/options.html",
    "permissions": [ "storage", "https://github.cerner.com/*", "https://jira.cerner.com/*", "https://jira2.cerner.com/*", "https://jira3.cerner.com/*" ],
    "version": "0.1.1"
 }

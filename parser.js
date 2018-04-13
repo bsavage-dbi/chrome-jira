@@ -1,24 +1,26 @@
-function fetchJiraStatus(key) {
-  return new Promise((resolve, reject) => {
-    console.log(`Fetching JIRA data for ${key}`);
-    const xhr = new XMLHttpRequest();
-
-    xhr.open('GET', `https://jira2.cerner.com/rest/api/2/issue/${key}?fields=status`, true);
-    xhr.onload = () => resolve(JSON.parse(xhr.responseText).fields.status.name);
-    xhr.onerror = () => reject(xhr.statusText);
-    xhr.send();
-  });
-}
-
 function getOptions() {
   if (localStorage.options && localStorage.options.length) {
     return JSON.parse(localStorage.options);
   }
 
   return {
-    jiraPath: 'https://jira2.cerner.com/browse/',
+    jiraPath: 'https://jira2.cerner.com/',
     regex: '(CONNECT)-[\\d]{1,6}',
   };
+}
+
+function fetchJiraStatus(key) {
+  return new Promise((resolve, reject) => {
+    console.log(`Fetching JIRA data for ${key}`);
+    const xhr = new XMLHttpRequest();
+
+    const { jiraPath } = getOptions();
+
+    xhr.open('GET', `${jiraPath}rest/api/2/issue/${key}?fields=status`, true);
+    xhr.onload = () => resolve(JSON.parse(xhr.responseText).fields.status.name);
+    xhr.onerror = () => reject(xhr.statusText);
+    xhr.send();
+  });
 }
 
 function addTooltip(element, status) {

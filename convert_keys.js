@@ -93,20 +93,3 @@ function findTextNodes(root) {
   }(root));
   return textNodes;
 }
-
-
-let options = {};
-chrome.runtime.sendMessage('get_options', (options_) => {
-  options = options_;
-
-  // Set global regex value
-  regex = options.regex;
-
-  // Format JIRA path with a trailing slash if not present
-  jiraPath = options.jira_path;
-  if (jiraPath.substr(-1) !== '/') jiraPath += '/';
-
-  // Ready to begin search for key names
-  searchForKeyNames();
-  observer.start();
-});

@@ -1,6 +1,7 @@
 function save() {
   const pgOptions = {
     jiraPath: document.getElementById('jiraPath').value,
+    pageRegex: document.getElementById('pageRegex').value,
     regex: document.getElementById('regex').value,
     tooltipPosition: document.getElementById('tooltipPosition').value,
   };
@@ -8,6 +9,9 @@ function save() {
   const defaultOptions = getDefaultOptions();
   if (!pgOptions.jiraPath.length) {
     pgOptions.jiraPath = defaultOptions.jiraPath;
+  }
+  if (!pgOptions.pageRegex.length) {
+    pgOptions.pageRegex = defaultOptions.pageRegex;
   }
   if (!pgOptions.regex.length) {
     pgOptions.regex = defaultOptions.regex;
@@ -24,13 +28,17 @@ function init() {
     const options = (result.options && JSON.parse(result.options)) || getDefaultOptions();
 
     document.getElementById('jiraPath').value = options.jiraPath;
+    document.getElementById('pageRegex').value = options.pageRegex;
     document.getElementById('regex').value = options.regex;
     document.getElementById('tooltipPosition').value = options.tooltipPosition;
 
-    document.getElementById('options_form').onchange = save;
+    document.getElementById('optionsForm').onchange = save;
 
     document.getElementById('jiraPath').onkeyup = save;
     document.getElementById('jiraPath').onclick = save;
+
+    document.getElementById('pageRegex').onkeyup = save;
+    document.getElementById('pageRegex').onclick = save;
 
     document.getElementById('regex').onkeyup = save;
     document.getElementById('regex').onclick = save;

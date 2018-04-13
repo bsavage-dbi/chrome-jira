@@ -10,11 +10,16 @@
 <body>
 	<h1>Cerner Github JIRA Status: Options</h1>
 
-	<form id="options_form">
+	<form id="optionsForm">
 		<p>
 			<label for="jiraPath">JIRA Path:</label>
-			<input type="text" size="70" id="jiraPath" />
+			<input type="text" size="100" id="jiraPath" />
 			<small>Default: https://jira2.cerner.com/</small>
+		</p>
+		<p>
+			<label for="regex">Pages to Match:</label>
+			<input type="text" size="100" id="pageRegex" />
+			<small>Default: https:\/\/github.cerner.com\/careaware-connect\/blackcomb_server\/commits\/.*</small>
 		</p>
 		<p>
 			<label for="regex">Regular Expression:</label>

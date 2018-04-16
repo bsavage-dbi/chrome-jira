@@ -50,4 +50,13 @@ function onPageLoad() {
   });
 }
 
-window.addEventListener('load', onPageLoad, false);
+// If page was navigated to directly
+window.addEventListener('load', onPageLoad);
+
+// Traditional listeners won't work for navigation within Github since it's a single page app
+const observer = new MutationObserver(onPageLoad);
+observer.observe(document.body, {
+  attributes: true,
+  childList: true,
+  characterData: true,
+});

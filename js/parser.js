@@ -1,3 +1,5 @@
+const queriesToMatch = ['p.commit-title'];
+
 function fetchJiraStatus(key, options) {
   return new Promise((resolve, reject) => {
     console.log(`Fetching JIRA data for ${key}`);
@@ -24,27 +26,22 @@ function onPageLoad() {
       return;
     }
 
-    const match = new RegExp(options.regex, 'gi');
-    const elements = document.getElementsByTagName('*');
+    const match = new RegExp(options.regex, 'i');
+    const elements = document.querySelectorAll(queriesToMatch.join(', '));
 
     for (let i = 0; i < elements.length; i += 1) {
-      const element = elements[i];
+      const node = elements[i];
+      if (node.getAttribute('data-tooltip')) {
+        return; // Node already has tooltip
+      }
 
-      for (let j = 0; j < element.childNodes.length; j += 1) {
-        const node = element.childNodes[j];
-
-        if (node.nodeType === 3) {
-          const text = node.nodeValue;
-
-          const matches = match.exec(text);
-          if (matches) {
-            fetchJiraStatus(matches[0], options).then((status) => {
-              addTooltip(element, status, options);
-            }).catch((err) => {
-              console.error(err);
-            });
-          }
-        }
+      const matches = match.exec(node.innerText);
+      if (node.innerText.match(options.regex)) {
+        fetchJiraStatus(matches[0], options).then((status) => {
+          addTooltip(node, status, options);
+        }).catch((err) => {
+          console.error(err);
+        });
       }
     }
   });

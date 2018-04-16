@@ -2,8 +2,7 @@ function save() {
   const pgOptions = {
     jiraPath: document.getElementById('jiraPath').value,
     pageRegex: document.getElementById('pageRegex').value,
-    regex: document.getElementById('regex').value,
-    tooltipPosition: document.getElementById('tooltipPosition').value,
+    regex: document.getElementById('regex').value
   };
 
   const defaultOptions = getDefaultOptions();
@@ -16,9 +15,6 @@ function save() {
   if (!pgOptions.regex.length) {
     pgOptions.regex = defaultOptions.regex;
   }
-  if (!pgOptions.tooltipPosition.length) {
-    pgOptions.tooltipPosition = defaultOptions.tooltipPosition;
-  }
 
   chrome.storage.sync.set({ options: JSON.stringify(pgOptions) });
 }
@@ -30,7 +26,6 @@ function init() {
     document.getElementById('jiraPath').value = options.jiraPath;
     document.getElementById('pageRegex').value = options.pageRegex;
     document.getElementById('regex').value = options.regex;
-    document.getElementById('tooltipPosition').value = options.tooltipPosition;
 
     document.getElementById('optionsForm').onchange = save;
 
@@ -42,9 +37,6 @@ function init() {
 
     document.getElementById('regex').onkeyup = save;
     document.getElementById('regex').onclick = save;
-
-    document.getElementById('tooltipPosition').onkeyup = save;
-    document.getElementById('tooltipPosition').onclick = save;
   });
 }
 

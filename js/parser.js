@@ -13,9 +13,16 @@ function fetchJiraStatus(key, options) {
   });
 }
 
-function addTooltip(element, status, options) {
-  element.setAttribute('data-tooltip', status);
-  element.setAttribute('data-tooltip-position', options.tooltipPosition);
+function addTooltip(element, status, key, options) {
+  const tooltip = document.createElement('span');
+  tooltip.setAttribute('class', 'tooltiptext');
+  const link = `${options.jiraPath}browse/${key}`;
+  tooltip.innerHTML = `<a href="${link}" target="_blank">${status}</a>`;
+
+  element.appendChild(tooltip);
+  element.classList += 'tooltip';
+  // element.setAttribute('class', element.getAttribute('tooltip'));
+  element.setAttribute('data-has-tooltip', true);
 }
 
 function onPageLoad() {
@@ -31,14 +38,14 @@ function onPageLoad() {
 
     for (let i = 0; i < elements.length; i += 1) {
       const node = elements[i];
-      if (node.getAttribute('data-tooltip')) {
+      if (node.getAttribute('data-has-tooltip')) {
         return; // Node already has tooltip
       }
 
       const matches = match.exec(node.innerText);
       if (node.innerText.match(options.regex)) {
         fetchJiraStatus(matches[0], options).then((status) => {
-          addTooltip(node, status, options);
+          addTooltip(node, status, matches[0], options);
         }).catch((err) => {
           console.error(err);
         });

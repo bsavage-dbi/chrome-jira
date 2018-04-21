@@ -1,5 +1,8 @@
 # Changelog
 
+### 0.1.5
+* Fix issues with options page in `0.1.4` release
+
 ### 0.1.4
 * Elements to be queried are customizable
 * Branches now queried by default

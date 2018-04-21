@@ -13,14 +13,14 @@ function save() {
 function init() {
   chrome.storage.sync.get(['options'], (result) => {
     const defaults = getDefaultOptions();
-    const custom = result.options;
+    const custom = result.options || {};
 
     document.getElementById('optionsForm').onchange = save;
 
     optionIds.forEach((optionId) => {
       const element = document.getElementById(optionId);
       element.placeholder = custom[optionId] || defaults[optionId];
-      if (custom[optionId] !== defaults[optionId]) {
+      if (custom[optionId] && custom[optionId] !== defaults[optionId]) {
         element.value = custom[optionId];
       }
     });

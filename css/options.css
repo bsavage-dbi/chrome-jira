@@ -10,3 +10,7 @@ label {
 input {
     display: block;
 }
+button {
+    float: right;
+    font-size: 16px;
+}

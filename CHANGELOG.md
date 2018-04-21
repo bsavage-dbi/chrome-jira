@@ -1,5 +1,10 @@
 # Changelog
 
+### 0.1.4
+* Elements to be queried are customizable
+* Branches now queried by default
+* Improved options page 
+
 ### 0.1.3
 * Tooltips now link to JIRA in new window
 * Removed ability to customize tooltip location

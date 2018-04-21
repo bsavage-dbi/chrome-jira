@@ -1,5 +1,3 @@
-const queriesToMatch = ['p.commit-title'];
-
 function fetchJiraStatus(key, options) {
   return new Promise((resolve, reject) => {
     console.log(`Fetching JIRA data for ${key}`);
@@ -20,21 +18,20 @@ function addTooltip(element, status, key, options) {
   tooltip.innerHTML = `<a href="${link}" target="_blank">${status}</a>`;
 
   element.appendChild(tooltip);
-  element.classList += 'tooltip';
-  // element.setAttribute('class', element.getAttribute('tooltip'));
+  element.classList.add('tooltip');
   element.setAttribute('data-has-tooltip', true);
 }
 
 function onPageLoad() {
   chrome.storage.sync.get(['options'], (result) => {
-    const options = (result.options && JSON.parse(result.options)) || getDefaultOptions();
+    const options = result.options || getDefaultOptions();
 
     if (!window.location.href.match(options.pageRegex)) {
       return;
     }
 
     const match = new RegExp(options.regex, 'i');
-    const elements = document.querySelectorAll(queriesToMatch.join(', '));
+    const elements = document.querySelectorAll(options.documentQueries);
 
     for (let i = 0; i < elements.length; i += 1) {
       const node = elements[i];

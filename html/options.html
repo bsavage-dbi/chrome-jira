@@ -10,22 +10,26 @@
 <body>
 	<h1>Cerner Github JIRA Status: Options</h1>
 
+	<h3>Fields reset to defaults if left blank when saving.</h3>
+
 	<form id="optionsForm">
 		<p>
 			<label for="jiraPath">JIRA Path:</label>
 			<input type="text" size="100" id="jiraPath" />
-			<small>Default: https://jira2.cerner.com/</small>
 		</p>
 		<p>
 			<label for="regex">Pages to Match:</label>
 			<input type="text" size="100" id="pageRegex" />
-			<small>Default: https:\/\/github.cerner.com\/careaware-connect\/blackcomb_server\/commits\/.*</small>
 		</p>
 		<p>
 			<label for="regex">Regular Expression:</label>
 			<input type="text" size="40" id="regex" />
-			<small>Default: (CONNECT)-[\d]{1,6}</small>
 		</p>
+		<p>
+			<label for="documentQueries"><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll" target="_blank">Document queries</a> to match:</label>
+			<input type="text" size="40" id="documentQueries" />
+		</p>
+		<button type="submit" value="Submit">Save</button>
 	</form>
 </body>
 </html>

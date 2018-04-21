@@ -17,5 +17,5 @@
    "name": "Cerner Github JIRA Status",
    "options_page": "html/options.html",
    "permissions": [ "storage", "https://github.cerner.com/*", "https://jira.cerner.com/*", "https://jira2.cerner.com/*", "https://jira3.cerner.com/*" ],
-   "version": "0.1.5"
+   "version": "0.1.6"
 }

@@ -1,5 +1,8 @@
 # Changelog
 
+### 0.1.6
+* Fix option parsing issue affecting anyone upgraded to `0.1.4` or `0.1.5` from a previous version
+
 ### 0.1.5
 * Fix issues with options page in `0.1.4` release
 

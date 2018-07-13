@@ -4,18 +4,30 @@ function fetchJiraStatus(key, options) {
 
     const xhr = new XMLHttpRequest();
 
-    xhr.open('GET', `${options.jiraPath}rest/api/2/issue/${key}?fields=status`, true);
-    xhr.onload = () => resolve(JSON.parse(xhr.responseText).fields.status.name);
+    xhr.open('GET', `${options.jiraPath}rest/api/2/issue/${key}?fields=status,fixVersions`, true);
+    xhr.onload = () => {
+      const { fields } = JSON.parse(xhr.responseText);
+      return resolve({
+        key,
+        status: fields.status.name,
+        fixVersions: fields.fixVersions.map(fixVersion => fixVersion.name),
+      });
+    };
     xhr.onerror = () => reject(xhr.statusText);
     xhr.send();
   });
 }
 
-function addTooltip(element, status, key, options) {
+function addTooltip(element, jiraData, options) {
   const tooltip = document.createElement('span');
   tooltip.setAttribute('class', 'tooltiptext');
-  const link = `${options.jiraPath}browse/${key}`;
-  tooltip.innerHTML = `<a href="${link}" target="_blank">${status}</a>`;
+  const link = `${options.jiraPath}browse/${jiraData.key}`;
+  tooltip.innerHTML = `<a href="${link}" target="_blank">${jiraData.status}</a>`;
+
+  if (options.showFixVersion) {
+    const fixVersions = jiraData.fixVersions.join(', ');
+    tooltip.innerHTML += `<br /><div class="fix-version">${fixVersions}</div>`;
+  }
 
   element.appendChild(tooltip);
   element.classList.add('tooltip');
@@ -41,8 +53,8 @@ function onPageLoad() {
 
       const matches = match.exec(node.innerText);
       if (node.innerText.match(options.regex)) {
-        fetchJiraStatus(matches[0], options).then((status) => {
-          addTooltip(node, status, matches[0], options);
+        fetchJiraStatus(matches[0], options).then((jiraData) => {
+          addTooltip(node, jiraData, options);
         }).catch((err) => {
           console.error(err);
         });

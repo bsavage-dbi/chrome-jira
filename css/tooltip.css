@@ -35,3 +35,8 @@
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+.fix-version {
+  color: grey;
+  font-size: 12px;
+}

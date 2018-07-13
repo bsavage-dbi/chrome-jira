@@ -4,10 +4,9 @@ body {
     font-size: 12px;
 }
 label {
-    display: block;
     margin-bottom: 5px;
 }
-input {
+input[type="text"] {
     display: block;
 }
 button {

@@ -1,5 +1,8 @@
 # Changelog
 
+### 0.1.8
+* Fix versions link to all JIRAs in that fix version
+
 ### 0.1.7
 * Tooltips show optional fix versions
 

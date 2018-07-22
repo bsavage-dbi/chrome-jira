@@ -25,8 +25,9 @@ function addTooltip(element, jiraData, options) {
   tooltip.innerHTML = `<a href="${link}" target="_blank">${jiraData.status}</a>`;
 
   if (options.showFixVersion) {
-    const fixVersions = jiraData.fixVersions.join(', ');
-    tooltip.innerHTML += `<br /><div class="fix-version">${fixVersions}</div>`;
+    const fixLinks = jiraData.fixVersions.map(fix =>
+      `<a href="${options.jiraPath}issues/?jql=fixVersion%20%3D%20${fix}" target="_blank">${fix}</a>`);
+    tooltip.innerHTML += `<div class="fix-version">${fixLinks.join(', ')}</div>`;
   }
 
   element.appendChild(tooltip);

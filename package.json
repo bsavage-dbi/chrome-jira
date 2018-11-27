@@ -1,7 +1,9 @@
 {
   "license": "UNLICENSED",
+  "author": "Noah Benham",
+  "repository": "https://github.cerner.com/NB042447/chrome-jira",
   "devDependencies": {
-    "eslint": "^5.6.1",
+    "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0"
   },

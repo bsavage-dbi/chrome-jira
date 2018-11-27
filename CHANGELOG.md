@@ -1,5 +1,9 @@
 # Changelog
 
+### 0.1.9
+* Use fetch API instead of xhr
+* Use NPM instead of Yarn
+
 ### 0.1.8
 * Fix versions link to all JIRAs in that fix version
 

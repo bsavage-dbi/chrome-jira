@@ -1,21 +1,17 @@
 function fetchJiraStatus(key, options) {
-  return new Promise((resolve, reject) => {
-    console.log(`Fetching JIRA data for ${key}`);
-
-    const xhr = new XMLHttpRequest();
-
-    xhr.open('GET', `${options.jiraPath}rest/api/2/issue/${key}?fields=status,fixVersions`, true);
-    xhr.onload = () => {
-      const { fields } = JSON.parse(xhr.responseText);
-      return resolve({
-        key,
-        status: fields.status.name,
-        fixVersions: fields.fixVersions.map(fixVersion => fixVersion.name),
-      });
-    };
-    xhr.onerror = () => reject(xhr.statusText);
-    xhr.send();
-  });
+  console.log(`Fetching JIRA data for ${key}`);
+  return fetch(`${options.jiraPath}rest/api/2/issue/${key}?fields=status,fixVersions`)
+    .then((response) => {
+      if (response.ok) return response.json();
+      throw new Error('Network response was not ok.');
+    })
+    .then(json => ({
+      key,
+      status: json.fields.status.name,
+      fixVersions: json.fields.fixVersions.map(fixVersion => fixVersion.name),
+    })).catch((err) => {
+      console.error(err);
+    });
 }
 
 function addTooltip(element, jiraData, options) {
@@ -55,8 +51,6 @@ function onPageLoad() {
       if (node.innerText.match(options.regex)) {
         fetchJiraStatus(matches[0], options).then((jiraData) => {
           addTooltip(node, jiraData, options);
-        }).catch((err) => {
-          console.error(err);
         });
       }
     }
